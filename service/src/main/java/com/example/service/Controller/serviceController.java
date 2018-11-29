@@ -31,6 +31,7 @@ public class serviceController {
         int valFinal = (tamano-1);
         int valReal = tamano;
         int valTotal = 0;
+        int caja = 0;
         int ronda = 0;
         int cantidad1 = 0;
         int cantidad2 = 0;
@@ -54,14 +55,17 @@ public class serviceController {
                 }
                 if(valFinal == i){
                     if(cantidad1 == cantidad2){
-
+                        caja = cantidad1+1;
                         cantidad1 = cantidad2;
                         valTotal = cantidad1;
-                        cantidad2 = 0;
+                       // cantidad2 = 0;
+                    } else if(caja == cantidad2){
+                        cantidad1 = (caja-1);
                     }else{
                         respuesta = "NO!!!";
                         break;
                     }
+                    cantidad2 = 0;
                 }
 
             }
