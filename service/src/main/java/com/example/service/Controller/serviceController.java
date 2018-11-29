@@ -62,7 +62,7 @@ public class serviceController {
                     } else if(caja == cantidad2){
                         cantidad1 = (caja-1);
                     }else{
-                        respuesta = "NO!!!";
+                        respuesta = "NO";
                         break;
                     }
                     cantidad2 = 0;
@@ -82,7 +82,7 @@ public class serviceController {
 
             if(valFinal == ronda){
                 if(valTotal == cantidad1){
-                    respuesta = "SI!!!";
+                    respuesta = "YES";
                     break;
                 }
             }
@@ -90,4 +90,7 @@ public class serviceController {
 
         return respuesta;
     }
+
+
+
 }
