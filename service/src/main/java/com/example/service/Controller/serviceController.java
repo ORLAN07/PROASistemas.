@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,6 +90,40 @@ public class serviceController {
         }
 
         return respuesta;
+    }
+
+    @RequestMapping(value = "/cadenaValida", method = RequestMethod.POST)
+    static String isValid(String s) {
+        //Este metodo soluciona los errores del primer metodo debido a que no paso 5 pruebas de 20
+        HashMap<Character,Integer> map=new HashMap<Character,Integer>();
+        int max=Integer.MIN_VALUE;
+        int min=Integer.MAX_VALUE;
+        for(int i=0;i<s.length();i++)
+        {
+            if(map.containsKey(s.charAt(i)))
+                map.put(s.charAt(i),map.get(s.charAt(i))+1);
+            else
+                map.put(s.charAt(i),1);
+            max=Math.max(max,map.get(s.charAt(i)));
+        }
+
+        int count1=0,count2=0;
+        for (Map.Entry m:map.entrySet())
+            min=Math.min(min,(int)m.getValue());
+
+        for (Map.Entry m:map.entrySet())
+        {
+            int val=(int)m.getValue();
+            if(val==max)
+                count1++;
+            else if(val==min)
+                count2++;
+        }
+
+        if(max-min==0 || (count1==map.size()-1 && min==1) || (count2==map.size()-1 && max-min==1))
+            return "YES";
+
+        return "NO";
     }
 
 
