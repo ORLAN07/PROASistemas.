@@ -1,9 +1,5 @@
 package com.example.service.Controller;
 
-
-
-
-
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +21,10 @@ public class serviceController {
 
     @RequestMapping(value = "/cadena", method = RequestMethod.POST)
     public String hola(@Valid @RequestBody String cadenaN) throws JSONException {
+        int [] prueba = new int [5];
+        for(int i = 0; i < prueba.length; i++){
+        }
+
         String cadena = cadenaN + " ";
         JSONObject obj = new JSONObject(cadena);
         String cadena1 = obj.getString("cadena") + " ";
@@ -93,7 +93,7 @@ public class serviceController {
     }
 
     @RequestMapping(value = "/cadenaValida", method = RequestMethod.POST)
-    static String isValid(String s) {                
+    static String isValid(String s) {
         //Este metodo soluciona los errores del primer metodo debido a que no paso 5 pruebas de 20
         HashMap<Character,Integer> map=new HashMap<Character,Integer>();
         int max=Integer.MIN_VALUE;
@@ -127,51 +127,68 @@ public class serviceController {
     }
 
     @RequestMapping(value = "/ProblemSolution", method = RequestMethod.POST)
-    static int nonDivisibleSubset (int k, int [] S) {
+    static int nonDivisibleSubset (int k, int[] S) {
 
-        int totalPair[][] =new int[k/2][2];
-        int nonDivisible =0;
-        int remainders[] = new int[S.length];
-        boolean conatinZeroRemainder =false;
-        for(int i=1;i<=totalPair.length;i++){
-            totalPair[i-1][0] =i;
-            totalPair[i-1][1] =k-i;
+
+        int cuenta[][] = new int[k/2][2];
+        int noDivisible = 0;
+        int duplicado[] = new int[S.length];
+        // System.out.println("tamaño arreglo kk " + cuenta.length);//1
+        //System.out.println("tamaño arreglo " + duplicado.length);//4
+        //System.out.println("valor k " + k);//3
+        boolean contieneCero = false;
+
+        for(int i = 1; i <= cuenta.length;i++){
+            cuenta[i-1][0] = i;
+            cuenta[i-1][1] = k-i;
         }
 
-
-        for(int i=0;i< S.length;i++){
-            remainders[i] = S[i]%k;
-            if(remainders[i] ==0){
-                conatinZeroRemainder =true;
+        for(int i = 0; i<S.length; i++){
+            //System.out.println("Todos los campos 1111111 " + duplicado[i]);
+            duplicado[i] = S[i]%k;//Le saca mod
+            //System.out.println("Todos los campos " + duplicado[i]);
+            if(duplicado[i] == 0){
+                // System.out.println("IMPRIME I POR QUE ES 0 " + duplicado[i]);
+                contieneCero = true;
             }
         }
 
-        for(int i=0;i<totalPair.length;i++){
-            int p1 =totalPair[i][0];
-            int p2 =totalPair[i][1];
-            int p1C =0;
-            int p2C =0;
-            if(p1 ==p2){
-                nonDivisible =nonDivisible+1;
+        for(int i = 0; i < cuenta.length;i++){
+            int val1 = cuenta[i][0];
+            int val2 = cuenta[i][1];
+            //System.out.println("VAL --1 " + val1);
+            //System.out.println("VAL --2 " + val2);
+            int val1R = 0;
+            int val2R = 0;
+
+            if(val1 == val2){
+                noDivisible = noDivisible+1;
                 break;
             }
-            for(int j=0;j<remainders.length;j++){
-                if(p1 ==remainders[j]){
-                    p1C++;
+
+            for(int j = 0; j < duplicado.length; j++){
+                //System.out.println("duplicado[j] " + duplicado[j]);
+                if(val1 == duplicado[j]){
+                    val1R++;
                 }
-                if(p2 ==remainders[j]){
-                    p2C++;
+                if(val2 == duplicado[j]){
+                    val2R++;
                 }
             }
-
-            nonDivisible = nonDivisible +(p1C>p2C ? p1C : p2C) ;
+            //System.out.println("noDivisible1111111 " + noDivisible);
+            noDivisible = noDivisible + (val1R>val2R ? val1R : val2R);
+            //System.out.println("noDivisible " + noDivisible);
 
 
         }
-        if(conatinZeroRemainder){
-            return nonDivisible+1;
+
+        if(contieneCero){
+            return noDivisible+1;
         }
-        return nonDivisible;
+
+        return noDivisible;
+
+
     }
 
 
