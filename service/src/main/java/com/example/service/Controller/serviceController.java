@@ -93,7 +93,7 @@ public class serviceController {
     }
 
     @RequestMapping(value = "/cadenaValida", method = RequestMethod.POST)
-    static String isValid(String s) {
+    static String isValid(String s) {                
         //Este metodo soluciona los errores del primer metodo debido a que no paso 5 pruebas de 20
         HashMap<Character,Integer> map=new HashMap<Character,Integer>();
         int max=Integer.MIN_VALUE;
